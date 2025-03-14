@@ -5,10 +5,32 @@ config({
     path: "./env"
 })
 
-connectDB()
+//we can make const = process.env.PORT || 8000 variable and use it instead looks clean to me
+
+connectDB()  //calling async function it returns promise
+.then(()=>{
+    
+    app.on("error",(error)=>{                         //listening to errors
+        console.log(`Error : `,error);
+    })
+
+    app.listen(process.env.PORT || 8000, ()=>{
+        console.log(`Server is running at port : ${process.env.PORT}`)
+    })
+})
+.catch((err),()=>{
+    console.log(`MONGO db connection failed !!!`,err);
+})
 
 
-/* 
+
+
+
+
+
+
+
+/* //this is for all the connection code in src -> index.js file 
 const app = express(); 
 
 ;(async()=>{
